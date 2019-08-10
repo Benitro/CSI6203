@@ -9,3 +9,4 @@ chmod +x ~/CSI6203/portfolio/"week2"/*.sh
 cd ~/CSI6203/
 tree
 echo 'Done'
+exit 0
