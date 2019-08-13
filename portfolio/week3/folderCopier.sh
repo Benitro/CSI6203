@@ -9,3 +9,4 @@ else
     #otherwise, print an error
     echo "I couldn't find that folder"
 fi
+exit 0
