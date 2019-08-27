@@ -6,3 +6,4 @@ do
     #print the iteration of the next number
     echo $i
 done
+exit 0

@@ -12,3 +12,4 @@ do
     echo "Creating directory number $i"
     mkdir "week$i"
 done
+exit 0
