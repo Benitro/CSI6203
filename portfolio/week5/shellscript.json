@@ -1,0 +1,21 @@
+{
+	"add a shebang": {
+		"prefix": "#!",
+		"body": [ "#!/bin/bash\n" ],
+		"description": "add a shebang to the script"
+	},
+	"add colour code variables": {
+		"prefix": "colour",
+		"body": [ "black='\\033[30m'",
+					"red='\\033[31m'",
+					"green='\\033[32m'",
+					"brown='\\033[33m'",
+					"blue='\\033[34m'",
+					"purple='\\033[35m'",
+					"cyan='\\033[36m'",
+					"grey='\\033[37m'",
+					"clear='\\033[0m'"
+				 ],
+		"description": "create colour code variables"
+	}
+}
