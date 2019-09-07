@@ -1,14 +1,15 @@
 #!/bin/bash
 
-$1 = 1
-$2 = 100
-
 baseTriangle()
 {
-    for $1 in $2
-    do
-        
-    done 
+    b=1
+    h=1
+    while (( 1 < $b || 100 > $h )); do
+    area=$(($b*$h/2))
+    echo "The area for triangle with base: $b and height: $h is: $area"
+    b=$((b+1))
+    h=$((h+1))
+    done
 }
 
-baseTriangle "The area for triangle with base: $1 and height: $2 is: "
+baseTriangle
