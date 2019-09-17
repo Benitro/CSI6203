@@ -9,4 +9,5 @@ s/IP Address/IP Address/
 p
 }')
 
+#Print the formatIpAddr variable
 echo -e "$formatIpAddr"
