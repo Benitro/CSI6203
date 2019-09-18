@@ -14,7 +14,7 @@ read -p "Type the URL of a file to download: " saveUrl
 read -p "Type the location of where you would like to download the file: " locFile
 #Call the function, passing the input from the user
 #dir=$(find / -type d -name "$locFile")
-dir=$(locate -b "$locFile")
+dir=$(find /home/student/ -name "$locFile")
 internetDownload
 #Print the message below, and exit
 echo "Download function complete!"
