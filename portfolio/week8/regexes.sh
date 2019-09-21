@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #All sed statements
-grep -r -E '(sed)'
+grep -r '\<sed\>'
 
 #All lines that starts with the letter m
 grep -r '^m'
@@ -16,4 +16,4 @@ grep -r '^[aeiou]'
 grep -r 'while\|for'
 
 #All echo statements with at least three words
-grep -r
+grep -r 
