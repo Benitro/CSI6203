@@ -4,7 +4,7 @@
 ipInfo="$(./ipInfo.sh)"
 
 #To display only the IP Address from the response 
-formatIpAddr=$(echo "$ipInfo" |sed -n '/IP Address: / {
+formatIpAddr=$(echo "$ipInfo" | sed -n '/IP Address: / {
 s/IP Address/IP Address/
 p
 }')

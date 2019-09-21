@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #All sed statements
-grep -r 'sed'
+grep -r '\ sed'
 
 #All lines that starts with the letter m
 grep -r '^m'
@@ -13,6 +13,6 @@ grep -r '[0-9]\{3\}'
 grep -r '^[aeiou]'
 
 #All lines that contains loops
-
+grep -r 
 
 #All echo statements with at least three words
