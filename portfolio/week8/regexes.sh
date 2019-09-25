@@ -16,4 +16,4 @@ grep -r '^[aeiou]'
 grep -r 'while\|for'
 
 #All echo statements with at least three words
-grep -r -E "echo (.)+"
+grep -r '\ echo ".* .* .*"'

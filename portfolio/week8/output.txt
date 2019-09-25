@@ -1,0 +1,11 @@
+    \033[31mERROR:\033[0m $1
+This is the start of the script!
+Thank you!
+Thank you!
+            Too low!
+            Too high!
+            Right!
+Running the download function:
+Download function complete!
+    \033[31mERROR:\033[0m  $VAR1
+    The area for triangle with base: $b and height: $h is: $area

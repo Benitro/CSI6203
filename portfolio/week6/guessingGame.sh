@@ -15,7 +15,7 @@ getNumber()
             read -p "$1: "
         #Else, the input is correct
         else
-            echo "Correct!"
+            echo "Right!"
             break
         #End
         fi
