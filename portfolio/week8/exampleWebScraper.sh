@@ -1,11 +1,16 @@
 #!/bin/bash
 
-#exampleWeb=$(curl -s http://example.com)
+#Store the curl output into a variable
+webOutput=$(curl -s http://example.com)
 
-#echo $exampleWeb
+#Extract the <h1> value from the HTML
+header=$(echo "$webOutput" | grep -o "<h1>.*" | sed 's/<[^>]*>//g' | head -1)
 
-title=$(curl -s http://example.com | grep "<h1>" | sed -n "/<h1>/,/<\/h1>/p")
+#Extract the <p> value, and trim the newline out (to store output to a single line)
+paragraph=$(echo "$webOutput" | tr -d '\n' | grep -o "<p>.*" | sed 's/<[^>]*><a.*//g')
 
-paragraph=$(curl -s http://example.com | grep "<p>" | sed -n "/<p>/,/<\/p>/p")
+#Strip the <p> tags, and expose the value
+formatPara=$(echo "$paragraph" | grep -o "<p>.*" | sed 's/<[^>]*>//g' | head -1)
 
-echo -e "$title\n$paragraph"
+#Print the output
+echo -e "$header\n$formatPara"
