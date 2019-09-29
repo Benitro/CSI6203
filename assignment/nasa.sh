@@ -16,9 +16,19 @@ function grabImageName() {
     #local formatDate=$(date "$1" $2 +%y%m%d)
     #local url="https://apod.nasa.gov/apod/ap"$(echo "$formatDate")".html"
     #local content=$(curl -s $url)
-    local imageName=$(echo $@ | grep -o "<b>.*Image" | sed 's/<[^>]*>//g' | head -1)
+    local imageName=$(echo $@ | grep -o "<b>.*</b> <br>" | sed 's/<[^>]*>//g' | head -1)
     echo $imageName
+    #echo $content
 }
 
-#grabImageName $1 $2
+function grabExplanation() {
+    local formatDate=$(date "$1" $2 +%y%m%d)
+    local url="https://apod.nasa.gov/apod/ap"$(echo "$formatDate")".html"
+    local content=$(curl -s $url)
+    local explain=$(echo $content | grep -o "<b> Explanation.*</a>" | sed 's/<[^>]*>//g' | head -1)
+    echo $explain
+}
+
 #storeContent $1 $2
+#grabImageName $1 $2
+grabExplanation $1 $2
