@@ -40,7 +40,7 @@ function grabImageWebLink() {
     echo $addExtension
 }
 
-storeContent $1 $2
+#storeContent $1 $2
 #grabImageNameTitle $1 $2
 #grabExplanation $1 $2
 #grabImageCredit $1 $2
