@@ -19,7 +19,7 @@ function grabExplanation() {
     #local formatDate=$(date "$1" $2 +%y%m%d)
     #local url="https://apod.nasa.gov/apod/ap"$(echo "$formatDate")".html"
     #local content=$(curl -s $url)
-    local explain=$(echo $@ | grep -o "Explanation.*<p>.*<center>" | sed 's/<[^>]*>//g')
+    local explain=$(echo $@ | grep -o "<b> Explanation.*<p>.*<center>" | sed 's/<[^>]*>//g')
     echo $explain
 }
 
