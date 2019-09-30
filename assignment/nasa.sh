@@ -13,22 +13,21 @@ fi
 }
 
 function grabImageName() {
-    #local formatDate=$(date "$1" $2 +%y%m%d)
-    #local url="https://apod.nasa.gov/apod/ap"$(echo "$formatDate")".html"
-    #local content=$(curl -s $url)
     local imageName=$(echo $@ | grep -o "<b>.*</b> <br>" | sed 's/<[^>]*>//g' | head -1)
     echo $imageName
-    #echo $content
 }
 
 function grabExplanation() {
-    local formatDate=$(date "$1" $2 +%y%m%d)
-    local url="https://apod.nasa.gov/apod/ap"$(echo "$formatDate")".html"
-    local content=$(curl -s $url)
-    local explain=$(echo $content | grep -o "<b> Explanation.*</a>" | sed 's/<[^>]*>//g' | head -1)
+    local explain=$(echo $@ | grep -o "<b> Explanation.*<p>.*</a> <br> <b>" | sed 's/<[^>]*>//g')
     echo $explain
+}
+
+function grabImageCredit() {
+    local credit=$(echo $@ | grep -o "<b> Image Credit.* </center> <p>" | sed 's/<[^>]*>//g' | head -1)
+    echo $credit
 }
 
 #storeContent $1 $2
 #grabImageName $1 $2
-grabExplanation $1 $2
+#grabExplanation $1 $2
+#grabImageCredit $1 $2
