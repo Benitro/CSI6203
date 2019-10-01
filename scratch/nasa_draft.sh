@@ -4,13 +4,13 @@
 #Edith Cowan University
 
 function storeContent() {
-    local formatDate=$(date -d $2 +%y%m%d)
+    local formatDate=$(date -d $@ +%y%m%d)
     local url="https://apod.nasa.gov/apod/ap"$(echo "$formatDate")".html"
     local content=$(curl -s $url)
     if [[ $? -eq 0 ]]; then
         echo "$content"
     else
-        echo "NotFound"
+        echo "notFound"
     fi
 }
 
@@ -40,9 +40,24 @@ function grabImageWebLink() {
 }
 
 function imageDownloader() {
-    storeContent
-    link=grabImageWebLink "storeContent"
-    echo $link
+    echo "Connecting to nasa.gov..."
+    htmlContent=$(storeContent $@)
+    if [[ $htmlContent = "notFound" ]]; then
+        echo -e "\nUnable to connect to nasa.gov."
+        exit 1
+    else
+        imageLink=$(grabImageWebLink $htmlContent)
+        if [[ $imageLink = "noImageFound" ]]; then
+            echo -e "\nNo image was found for this date. Closing connection.."
+            exit 1
+        else
+            imageName=$(grabImageNameTitle $htmlContent)
+            #Note to self: Format the image file type
+            echo -e "\nDownloading $imageName"
+            wget -q $imageLink
+            echo -e "\nFinished."
+        fi
+    fi
 }
 
 imageDownloader $2
