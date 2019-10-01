@@ -7,7 +7,11 @@ function storeContent() {
     local formatDate=$(date -d $2 +%y%m%d)
     local url="https://apod.nasa.gov/apod/ap"$(echo "$formatDate")".html"
     local content=$(curl -s $url)
-    echo "$content"
+    if [[ $? -eq 0 ]]; then
+        echo "$content"
+    else
+        echo "NotFound"
+    fi
 }
 
 function grabImageNameTitle() {
@@ -28,7 +32,13 @@ function grabImageCredit() {
 function grabImageWebLink() {
     local extension=$(echo $@ | grep -o 'image/.*<I' | sed 's/<I/>/g' | tr -d '>"')
     local addExtension="https://apod.nasa.gov/apod/"$extension
-    echo $addExtension
+    if [ -z $extension ]; then
+        echo "noImageFound"
+    else
+        echo $addExtension
+    fi
 }
+
+storeContent $1 $2
 
 #Notes: Testing video content ..apod/ap190108
