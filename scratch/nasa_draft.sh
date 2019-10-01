@@ -39,6 +39,12 @@ function grabImageWebLink() {
     fi
 }
 
-storeContent $1 $2
+function imageDownloader() {
+    storeContent
+    link=grabImageWebLink "storeContent"
+    echo $link
+}
+
+imageDownloader $2
 
 #Notes: Testing video content ..apod/ap190108
