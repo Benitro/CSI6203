@@ -52,8 +52,8 @@ function imageDownloader() {
             exit 1
         else
             imageName=$(grabImageNameTitle $htmlContent)
-            #Note to self: Format the image file type
-            echo -e "\nDownloading $imageName"
+            imageType=$(grabImageWebLink $htmlContent | sed 's/.*\.//')
+            echo -e "\nDownloading "\"${imageName}"."${imageType}\"
             wget -q $imageLink
             echo -e "\nFinished."
         fi
@@ -61,5 +61,3 @@ function imageDownloader() {
 }
 
 imageDownloader $2
-
-#Notes: Testing video content ..apod/ap190108
