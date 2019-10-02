@@ -60,4 +60,23 @@ function imageDownloader() {
     fi
 }
 
-imageDownloader $2
+function explanationViewer() {
+    echo "Connecting to nasa.gov.."
+    htmlContent=$(storeContent $@)
+    if [[ $htmlContent = "notFound" ]]; then
+        echo -e "\nUnable to connect to nasa.gov."
+        exit 1
+    else
+        explain=$(grabExplanation $htmlContent | sed 's/\<Explanation\>://g')
+        if [[ -z $explain ]]; then
+            echo -e "\nNo content to display today. Try again tomorrow.."
+            exit 1
+        else
+            echo -e "\n$explain"
+            echo -e "\nFinished."
+        fi
+    fi
+}
+
+#imageDownloader $2
+explanationViewer $2
