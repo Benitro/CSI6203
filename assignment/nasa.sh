@@ -78,5 +78,29 @@ function explanationViewer() {
     fi
 }
 
+function detailViewer() {
+    echo "Connecting to nasa.gov.."
+    htmlContent=$(storeContent $@)
+    if [[ $htmlContent = "notFound" ]]; then
+        echo -e "\nUnable to connect to nasa.gov."
+        exit 1
+    else
+        title=$(grabImageNameTitle $htmlContent)
+        echo -e "\nTITLE: $title"
+        explain=$(grabExplanation $htmlContent | sed 's/Explanation/EXPLANATION/')
+        echo -e "\n$explain"
+        credit=$(grabImageCredit $htmlContent | sed 's/Image Credit/IMAGE CREDIT/')
+        if [[ -z $credit ]]; then
+            echo -e "\nNo image available today. Please try again later.."
+            echo -e "\nFinished."
+            exit 1
+        else
+            echo -e "\n$credit"
+        fi
+        echo -e "\nFinished."
+    fi
+}
+
 #imageDownloader $2
-explanationViewer $2
+#explanationViewer $2
+detailViewer $2
