@@ -39,7 +39,7 @@ function grabImageWebLink() {
     fi
 }
 
-function imageDownloader() {
+function downloadImage() {
     echo "Connecting to nasa.gov..."
     htmlContent=$(storeContent $@)
     if [[ $htmlContent = "notFound" ]]; then
@@ -101,6 +101,6 @@ function detailViewer() {
     fi
 }
 
-#imageDownloader $2
+#downloadImage $2
 #explanationViewer $2
-detailViewer $2
+#detailViewer $2
