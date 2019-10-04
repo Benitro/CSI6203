@@ -40,7 +40,6 @@ function grabImageWebLink() {
 }
 
 function downloadImage() {
-    echo "Connecting to nasa.gov..."
     htmlContent=$(storeContent $@)
     if [[ $htmlContent = "notFound" ]]; then
         echo -e "\nUnable to connect to nasa.gov."
@@ -55,13 +54,11 @@ function downloadImage() {
             imageType=$(grabImageWebLink $htmlContent | sed 's/.*\.//')
             echo -e "\nDownloading "\"${imageName}"."${imageType}\"
             wget -q $imageLink
-            echo -e "\nFinished."
         fi
     fi
 }
 
 function explanationViewer() {
-    echo "Connecting to nasa.gov.."
     htmlContent=$(storeContent $@)
     if [[ $htmlContent = "notFound" ]]; then
         echo -e "\nUnable to connect to nasa.gov."
@@ -73,13 +70,11 @@ function explanationViewer() {
             exit 1
         else
             echo -e "\n$explain"
-            echo -e "\nFinished."
         fi
     fi
 }
 
 function detailViewer() {
-    echo "Connecting to nasa.gov.."
     htmlContent=$(storeContent $@)
     if [[ $htmlContent = "notFound" ]]; then
         echo -e "\nUnable to connect to nasa.gov."
@@ -92,15 +87,27 @@ function detailViewer() {
         credit=$(grabImageCredit $htmlContent | sed 's/Image Credit/IMAGE CREDIT/')
         if [[ -z $credit ]]; then
             echo -e "\nNo image available today. Please try again later.."
-            echo -e "\nFinished."
             exit 1
         else
             echo -e "\n$credit"
         fi
-        echo -e "\nFinished."
     fi
+}
+
+function downloadImageRange() {
+    i=1
+    startDate=$(date -d $1 +%y%m%d)
+    endDate=$(date -d $2 +%y%m%d)
+    rangeDate=$startDate
+    while [ "$rangeDate" -le "$endDate" ]; do
+        callDownloadImg=$(downloadImage "$rangeDate")
+        echo "$callDownloadImg"
+        rangeDate=$(date +%y%m%d -d "$rangeDate + i day")
+        i=i++;
+    done
 }
 
 #downloadImage $2
 #explanationViewer $2
 #detailViewer $2
+#downloadImageRange $1 $2
