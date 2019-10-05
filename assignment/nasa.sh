@@ -62,7 +62,7 @@ function downloadImage() {
     else
         imageLink=$(grabImageWebLink $htmlContent)
         if [[ $imageLink = "noImageFound" ]]; then
-            echo -e "\nNo image was found for this date. Closing connection.."
+            echo -e "\nNo image was found for this date."
             exit 1
         else
             imageName=$(grabImageNameTitle $htmlContent)
@@ -116,18 +116,25 @@ function detailViewer() {
 }
 
 # downloadImageRange function is used to download a set of images with a specific date range.
+#   If the number of days is > 10 days, an error message will appear.
+#   If the number of days is < 10 days, the function will proceed in downloading images to the source
 
 function downloadImageRange() {
     i=1
     startDate=$(date -d $1 +%y%m%d)
     endDate=$(date -d $2 +%y%m%d)
-    rangeDate=$startDate
-    while [ "$rangeDate" -le "$endDate" ]; do
-        callDownloadImg=$(downloadImage "$rangeDate")
-        echo "$callDownloadImg"
-        rangeDate=$(date +%y%m%d -d "$rangeDate + i day")
-        i=i++;
-    done
+    between=$(($endDate-$startDate))
+    if [[ $between -le 10 ]]; then
+        rangeDate=$startDate
+        while [ "$rangeDate" -le "$endDate" ]; do
+            callDownloadImg=$(downloadImage "$rangeDate")
+            echo "$callDownloadImg"
+            rangeDate=$(date +%y%m%d -d "$rangeDate + i day")
+            i=i++;
+        done
+    else 
+        echo -e "\nMaximum number of images to download is 10. Please try again."
+    fi
 }
 
 # Using a case statement, and taking the 1st command line argument, it will look for the 1st argument
