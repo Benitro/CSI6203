@@ -1,7 +1,10 @@
 #!/bin/bash
 
-#Author: Benjamin Jacob Walker
-#Edith Cowan University
+# Author: Benjamin Jacob Walker
+# Edith Cowan University
+
+# storeContent function is used to extract the HTML elements from the webpage. 
+#   This takes a formatted date input
 
 function storeContent() {
     local formatDate=$(date -d $@ +%y%m%d)
@@ -14,20 +17,28 @@ function storeContent() {
     fi
 }
 
+# grabImageNameTitle function is used to extract the title of the page from within the HTML elements
+
 function grabImageNameTitle() {
     local imageName=$(echo $@ | grep -o "<b>.*</b> <br>" | sed 's/<[^>]*>//g')
     echo $imageName
 }
+
+# grabExplanation function is used to extract the explanation taken from the webpage
 
 function grabExplanation() {
     local explain=$(echo $@ | grep -o "<b> Explanation.*<p>.*<center>" | sed 's/<[^>]*>//g')
     echo $explain
 }
 
+# grabImageCredit function is used to extract the Image Credit detail from the webpage
+
 function grabImageCredit() {
     local credit=$(echo $@ | grep -o "Image Credit.*</center> <p>" | sed 's/<[^>]*>//g')
     echo $credit
 }
+
+# grabImageWebLink function is used to extract the image extension, and append to the end of the webpage URL
 
 function grabImageWebLink() {
     local extension=$(echo $@ | grep -o 'image/.*<I' | sed 's/<I/>/g' | tr -d '>"')
@@ -38,6 +49,10 @@ function grabImageWebLink() {
         echo $addExtension
     fi
 }
+
+# downloadImage function is used to download the image to the source directory. 
+#   If the webpage is unavailable, an error message will appear. 
+#   If an image is not found (content may be video), an error message will appear
 
 function downloadImage() {
     htmlContent=$(storeContent $@)
@@ -58,6 +73,9 @@ function downloadImage() {
     fi
 }
 
+# explanationViewer function is used to display the explanation or detail of the webpage.
+#   If the explanation is not found, an error message will appear
+
 function explanationViewer() {
     htmlContent=$(storeContent $@)
     if [[ $htmlContent = "notFound" ]]; then
@@ -73,6 +91,9 @@ function explanationViewer() {
         fi
     fi
 }
+
+# detailViewer function is used to display the detail of the webpage (Title, Explanation, and Image Credit).
+#   If an image is not found (i.e. video content), an error message will appear
 
 function detailViewer() {
     htmlContent=$(storeContent $@)
@@ -94,6 +115,8 @@ function detailViewer() {
     fi
 }
 
+# downloadImageRange function is used to download a set of images with a specific date range.
+
 function downloadImageRange() {
     i=1
     startDate=$(date -d $1 +%y%m%d)
@@ -107,7 +130,34 @@ function downloadImageRange() {
     done
 }
 
-#downloadImage $2
-#explanationViewer $2
-#detailViewer $2
-#downloadImageRange $1 $2
+# Using a case statement, and taking the 1st command line argument, it will look for the 1st argument
+#   and call to that particular function
+
+## Example of the commands for each of the inputs ##
+
+# downloadImage; i.e. ./nasa.sh -d 2019-01-01
+# explanationViewer; i.e. ./nasa.sh --type explanation --date 2019-01-01 
+# detailViewer; i.e. ./nasa.sh -t details -d 2019-01-01
+# downloadImageRange; i.e. ./nasa.sh --range 2019-01-01 2019-01-04
+
+case $1 in
+    "-d")
+        echo -e "Connecting to nasa.gov..."
+        downloadImage $2
+        echo -e "\nFinished.";;
+    "--type")
+        echo -e "Connecting to nasa.gov..."
+        explanationViewer $4
+        echo -e "\nFinished.";;
+    "-t")
+        echo -e "Connecting to nasa.gov..."
+        detailViewer $4
+        echo -e "\nFinished.";;
+    "--range")
+        echo -e "Connecting to nasa.gov..."
+        downloadImageRange $2 $3
+        echo -e "\nFinished.";;
+    *)
+        echo -e "\nUnknown input.";;
+esac
+exit 0
