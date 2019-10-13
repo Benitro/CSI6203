@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#Prints the content of the CSV file into table format
+
 echo "Your shopping list is as follows:"
 awk 'BEGIN {FS=","; currency="$"; 
 print "Item            | Quantity  | Price"; 
