@@ -12,5 +12,11 @@ s/is/Area/
 p
 }')
 
-#Print the output of shortTri variable
+#Print the output of the shortTri into the total variable, and use sed to get the Area value, then sum the total value
+total=$(echo "$shortTri" | sed 's/.*Area:[^0-9]*//g' | awk '{sum+=$total} END {print sum}')
+
+#Print the shortTri variable
 echo -e "$shortTri"
+
+#Print the total variable
+echo -e "Total Area: $total"
