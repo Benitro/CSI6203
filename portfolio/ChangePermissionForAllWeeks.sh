@@ -14,7 +14,6 @@ chmod +x ~/CSI6203/portfolio/"week7"/*.sh
 chmod +x ~/CSI6203/portfolio/"week8"/*.sh
 chmod +x ~/CSI6203/portfolio/"week9"/*.sh
 chmod +x ~/CSI6203/portfolio/"week10"/*.sh
-chmod +x ~/CSI6203/portfolio/"week11"/*.sh
 cd ~/CSI6203/
 tree
 echo 'Done'
